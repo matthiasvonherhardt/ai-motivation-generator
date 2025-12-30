@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Untuk Kamu 🤍</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff9acb, #b983ff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.card {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(12px);
+  border-radius: 25px;
+  padding: 35px;
+  max-width: 420px;
+  text-align: center;
+  color: white;
+  animation: fadeUp 0.8s ease;
+  box-shadow: 0 0 30px rgba(255,180,255,0.9);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fall {
+  position: absolute;
+  top: -10vh;
+  font-size: 28px;
+  animation: fall linear infinite;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh); opacity: 0; }
+}
+
+button {
+  margin-top: 20px;
+  background: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  color: #9b59b6;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>🤍 Untuk Kamu</h2>
+  <p id="text" style="font-size:1.2rem;margin-top:20px;"></p>
+
+  <button onclick="kembaliKeIndex()">
+  🔄 Coba Motivasi Lain
+</button>
+
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const kategori = params.get("kategori");
+
+const textEl = document.getElementById("text");
+
+const motivasi = {
+  hidup: [
+    "Hidup tidak selalu mudah, tapi setiap langkah kecil yang kamu ambil hari ini adalah bukti bahwa kamu sedang berusaha. Jangan remehkan dirimu sendiri, karena bertahan pun adalah bentuk kekuatan.",
+    "Kamu tidak harus selalu kuat setiap saat. Saat lelah, istirahatlah sebentar, lalu lanjutkan lagi. Hidup bukan lomba, tapi perjalanan.",
+    "Tidak apa-apa jika hari ini tidak berjalan sesuai rencana. Besok selalu membawa kesempatan baru untuk mencoba lagi.",
+    "Hidup mengajarkan kita untuk jatuh agar kita belajar bangkit dengan cara yang lebih dewasa.",
+    "Kamu berharga, bahkan saat tidak ada yang memuji atau melihat perjuanganmu.",
+    "Setiap hari adalah halaman baru. Apa yang kemarin menyakitkan, hari ini bisa menjadi pelajaran.",
+    "Jangan bandingkan hidupmu dengan orang lain. Setiap orang punya waktu dan jalannya masing-masing.",
+    "Hidup bukan tentang kesempurnaan, tapi tentang keberanian untuk terus melangkah.",
+    "Selama kamu masih bernapas, masih ada harapan yang bisa diperjuangkan.",
+    "Percayalah, hidup akan terasa lebih ringan ketika kamu menerima dirimu apa adanya."
+
+  ],
+  belajar: [
+    "Belajar memang melelahkan, tapi hasilnya akan membuatmu bangga pada dirimu sendiri.",
+    "Tidak paham hari ini bukan berarti kamu bodoh, itu hanya berarti kamu sedang belajar.",
+    "Setiap kesalahan dalam belajar adalah tanda bahwa kamu sedang berkembang.",
+    "Proses belajarmu tidak harus cepat, yang penting konsisten. juga tetap maju.",
+    "Ilmu yang kamu pelajari hari ini akan menjadi bekal berharga di masa depan.",
+    "Jangan menyerah hanya karena satu nilai buruk. Kamu lebih dari sekadar angka.",
+    "Pelan-pelan tidak apa-apa, asalkan kamu tidak berhenti.",
+    "Belajar adalah bentuk cinta pada masa depanmu sendiri.",
+    "Saat kamu merasa malas, ingat alasan kenapa kamu memulai.",
+    "Usahamu hari ini akan menjadi cerita suksesmu suatu hari nanti."
+
+  ],
+  masaDepan: [
+    "Masa depan memang belum terlihat jelas, tapi setiap langkah kecil hari ini sedang membentuknya.",
+    "Jangan takut bermimpi besar, karena mimpi itulah yang memberi arah hidupmu.",
+    "Ketidakpastian bukan alasan untuk berhenti, tapi alasan untuk berani.",
+    "Masa depan yang baik dibangun dari keputusan kecil yang kamu ambil sekarang.",
+    "Kamu tidak terlambat, kamu hanya sedang berada di waktumu sendiri.",
+    "Apa yang kamu tanam hari ini, akan kamu tuai di masa depan.",
+    "Jangan biarkan ketakutan menghalangi potensi besarmu.",
+    "Percaya pada dirimu sendiri adalah investasi terbaik untuk masa depan.",
+    "Masa depanmu layak diperjuangkan, sepelan apa pun prosesnya.",
+    "Teruslah berjalan, masa depan sedang menunggumu dengan versi terbaik dirimu."
+
+  ],
+  insecure: [
+    "Tidak apa-apa merasa tidak percaya diri, itu manusiawi.",
+    "Kamu cukup, bahkan saat kamu merasa kurang.",
+    "Jangan ukur nilai dirimu dari pendapat orang lain.",
+    "Kekuranganmu tidak menghapus semua kelebihanmu.",
+    "Kamu tetap berharga meski tidak sempurna.",
+    "Setiap orang punya luka yang tidak terlihat.",
+    "Belajarlah mencintai dirimu perlahan-lahan.",
+    "Kamu tidak perlu menjadi orang lain untuk layak dicintai.",
+    "Versi dirimu hari ini sudah cukup baik.",
+    "Kamu pantas merasa bangga pada dirimu sendiri."
+
+  ],
+  gagal: [
+    "Gagal bukan akhir, tapi bagian dari proses belajar.",
+    "Setiap kegagalan membawa pelajaran berharga.",
+    "Kamu tidak gagal, kamu sedang mencoba.",
+    "Bangkit memang sulit, tapi kamu mampu.",
+    "Kegagalan hari ini tidak menentukan masa depanmu.",
+    "Orang hebat pun pernah jatuh berkali-kali.",
+    "Jangan berhenti hanya karena satu kegagalan.",
+    "Dari kegagalan, kamu menjadi lebih kuat.",
+    "Kamu lebih berani dari yang kamu kira.",
+    "Teruslah melangkah, kamu belum selesai."
+
+  ],
+  badluck: [
+    "Hari buruk tidak berarti hidupmu buruk.",
+    "Keberuntungan akan datang pada waktunya.",
+    "Semua hal buruk pasti berlalu.",
+    "Jangan menyalahkan dirimu atas hal yang di luar kendali.",
+    "Tetaplah berharap meski hari ini berat.",
+    "Semesta sedang mengujimu agar kamu lebih kuat.",
+    "Hari ini mungkin berat, tapi besok belum tentu.",
+    "Kesabaranmu sedang dilatih.",
+    "Kamu tidak sendirian menghadapi ini.",
+    "Percayalah, hal baik sedang menuju ke arahmu."
+
+  ],
+  kecewa: [
+    "Kecewa memang menyakitkan, tapi perasaanmu valid.",
+    "Tidak apa-apa merasa sedih, jangan dipendam.",
+    "Luka butuh waktu untuk sembuh.",
+    "Kamu pantas mendapatkan hal yang lebih baik.",
+    "Jangan biarkan kekecewaan mematikan harapanmu.",
+    "Apa yang menyakitimu hari ini akan menguatkanmu.",
+    "Kamu sudah berusaha, itu cukup.",
+    "Peluk dirimu sendiri hari ini.",
+    "Kesedihan tidak akan selamanya tinggal.",
+    "Kamu akan baik-baik saja, pelan-pelan."
+
+  ]
+};
+
+const emojiMap = {
+  hidup: ["🌸","🌻"],
+  belajar: ["📚","✏️"],
+  masaDepan: ["🔮","✨"],
+  insecure: ["🤍","💖"],
+  gagal: ["🤩","💪🏼"],
+  badluck: ["🍀","⭐"],
+  kecewa: ["🤗","😽"]
+};
+
+// ✨ tampilkan motivasi
+if (motivasi[kategori]) {
+  const list = motivasi[kategori];
+  textEl.innerText = list[Math.floor(Math.random() * list.length)];
+}
+
+// 🌧️ emoji looping
+setInterval(() => {
+  const icons = emojiMap[kategori] || ["🤍"];
+  for (let i = 0; i < 3; i++) {
+    const el = document.createElement("div");
+    el.className = "fall";
+    el.innerText = icons[Math.floor(Math.random() * icons.length)];
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.animationDuration = 3 + Math.random() * 3 + "s";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 6000);
+  }
+}, 700);
+
+// 🔄 kembali
+function kembaliKeIndex() {
+  window.location.href = "index.html";
+}
+
+</script>
+</body>
+</html>

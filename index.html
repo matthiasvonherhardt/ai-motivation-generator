@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Motivation Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Glow effect */
+.glow {
+  box-shadow: 0 0 25px rgba(255, 182, 255, 0.9);
+  transition: box-shadow 0.6s ease;
+}
+
+/* Animasi kategori */
+.fadeSoft { animation: fadeSoft 0.8s ease; }
+.floatUp { animation: floatUp 1s ease; }
+.shakeSoft { animation: shakeSoft 0.6s; }
+
+@keyframes fadeSoft {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes floatUp {
+  from { transform: translateY(15px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes shakeSoft {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9acb, #b983ff);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    /* OPENING */
+    #opening {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #ff69b4, #9b59b6);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      z-index: 10;
+      animation: fadeIn 1.2s;
+      text-align: center;
+    }
+
+    #playBtn {
+      margin-top: 25px;
+      padding: 12px 32px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1.1rem;
+      background: white;
+      color: #9b59b6;
+      transition: 0.3s;
+    }
+
+    #playBtn:hover {
+      transform: scale(1.05);
+    }
+
+    /* MAIN APP */
+    #app {
+      display: none;
+      padding-top: 80px;
+      height: 100vh;
+      text-align: center;
+      color: white;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px;
+      animation: fadeUp 0.8s;
+    }
+
+    /* EMOJI FALL */
+    .fall {
+  position: absolute;
+  font-size: 34px; /* lebih besar */
+  top: -10vh;      /* mulai lebih ke atas layar */
+  pointer-events: none;
+  animation: fall linear infinite;
+}
+
+    @keyframes fall {
+  from {
+    transform: translateY(-10vh);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .footer-text {
+  margin-top: 40px;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.footer-text p {
+  margin: 4px 0;
+}
+.ayo-mulai {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  animation: blinkSoft 1.5s infinite;
+}
+
+@keyframes blinkSoft {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.label-kategori {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: white;
+  text-align: left;
+}
+  </style>
+</head>
+<body>
+
+<!-- OPENING -->
+<div id="opening">
+  <h1>Haiii kamu 🌸💗</h1>
+  <p>Aku punya banyaaakk sekali motivasi loh!!</p>
+
+  <!-- TEKS AYO MULAI -->
+  <div class="ayo-mulai">AYOOO MULAII ✨</div>
+
+  <button id="playBtn">▶ Mulai</button>
+  <div class="footer-text">
+  <p>Qothrun Nada Qobusah Billah — (202511420068)</p>
+  <p>© 2025 — AI Motivation Generator</p>
+  <p>Dibuat dengan 💖 menggunakan Java (Spring Boot) & Bootstrap</p>
+</div>
+
+</div>
+
+<!-- APP -->
+<div id="app" class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <h4>✨ AI Motivation Generator ✨</h4>
+
+        <p class="label-kategori mt-3">Pilih Kategori Motivasi 💭</p>
+
+<select id="kategori" class="form-select">
+  <option value="hidup">🌱 Motivasi tentang Hidup</option>
+  <option value="belajar">📚 Motivasi tentang Belajar</option>
+  <option value="masaDepan">🔮 Motivasi tentang Masa Depan</option>
+  <option value="insecure">🤍 Motivasi ketika merasa Insecure</option>
+  <option value="gagal">📉 Motivasi ketika mengalami Kegagalan</option>
+  <option value="badluck">🍀 Motivasi ketika mengalami Bad Luck</option>
+  <option value="kecewa">😞 Motivasi ketika merasa Kecewa</option>
+</select>
+
+        <p id="motivation" class="mt-4">
+          Pilih kategori lalu klik tombol "Dapatkan Motivasi" ya!! 💕
+        </p>
+
+        <button class="btn btn-light mt-2" onclick="generateMotivation()">
+          Dapatkan Motivasi
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const playBtn = document.getElementById("playBtn");
+const opening = document.getElementById("opening");
+const app = document.getElementById("app");
+
+playBtn.addEventListener("click", () => {
+  opening.style.display = "none";
+  app.style.display = "block";
+});
+
+function generateMotivation() {
+  const kategori = document.getElementById("kategori").value;
+  window.location.href = `result.html?kategori=${kategori}`;
+}
+
+</script>
+</body>
+</html>
